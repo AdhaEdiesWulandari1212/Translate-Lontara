@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indonesia ke Aksara Lontara Translator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex flex-col items-center justify-between min-h-screen">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md mt-6">
+        <h1 class="text-2xl font-bold text-center mb-4">Penerjemaah akurat bahasa Indonesia ke Aksara Lontara</h1>
+        <div class="mb-4">
+            <label for="inputText" class="block text-sm font-medium text-gray-700">Teks Bahasa Indonesia</label>
+            <textarea id="inputText" class="mt-1 block w-full p-2 border border-gray-300 rounded-md" rows="4" placeholder="Masukkan teks..."></textarea>
+        </div>
+        <button id="translateBtn" class="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600">Terjemahkan</button>
+        <div class="mt-4">
+            <label for="outputText" class="block text-sm font-medium text-gray-700">Hasil Aksara Lontara</label>
+            <div id="outputText" class="mt-1 block w-full p-2 border border-gray-300 rounded-md bg-gray-50" style="min-height: 100px;"></div>
+        </div>
+    </div>
+    <footer class="bg-gray-800 text-white w-full text-center py-4 mt-6">
+        <p>© 2025 Adha Edies Wulandari. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Simulasi API (ganti dengan endpoint API sebenarnya jika ada)
+        const mockApi = {
+            translate: async function(text) {
+                // Simulasi pemetaan sederhana Indonesia ke Lontara
+                // Dalam praktiknya, ini akan menjadi panggilan ke server
+                let result = '';
+                for (let char of text.toLowerCase()) {
+                    // Contoh pemetaan sederhana (harus diganti dengan data Lontara asli dari API)
+                    const mapping = {
+                        'a': 'ᨕ', 'b': 'ᨅ', 'c': 'ᨌ', 'd': 'ᨉ', 'e': 'ᨙ',
+                        'i': 'ᨗ', 'k': 'ᨀ', 'l': 'ᨒ', 'm': 'ᨆ', 'n': 'ᨊ',
+                        'o': 'ᨚ', 'p': 'ᨄ', 'r': 'ᨑ', 's': 'ᨔ', 't': 'ᨈ',
+                        'u': 'ᨘ' // Tambahkan lebih banyak sesuai kebutuhan
+                    };
+                    result += mapping[char] || char;
+                }
+                return { translated: result };
+            }
+        };
+
+        // Fungsi untuk memanggil API dan menerjemahkan teks
+        async function translateText(input) {
+            try {
+                // Ganti URL ini dengan endpoint API Anda
+                const response = await mockApi.translate(input);
+                // Dalam kasus API sebenarnya:
+                // const response = await fetch('https://github.com/Bigsus-BF/js-API-percobaan.git', {
+                //     method: 'POST',
+                //     headers: { 'Content-Type': 'application/json' },
+                //     body: JSON.stringify({ text: input })
+                // });
+                // const data = await response.json();
+                return response.translated;
+            } catch (error) {
+                console.error('Error:', error);
+                return 'Terjadi kesalahan saat menerjemahkan.';
+            }
+        }
+
+        // Event listener untuk tombol terjemahkan
+        document.getElementById('translateBtn').addEventListener('click', async () => {
+            const inputText = document.getElementById('inputText').value;
+            if (!inputText.trim()) {
+                document.getElementById('outputText').innerText = 'Masukkan teks terlebih dahulu!';
+                return;
+            }
+            const translated = await translateText(inputText);
+            document.getElementById('outputText').innerText = translated;
+        });
+    </script>
+</body>
+</html>
